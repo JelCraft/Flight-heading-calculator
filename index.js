@@ -7,7 +7,6 @@ function getCoords() {
     }
     return coords
 }
-
 function computeHeading() {
     const coords = getCoords();
     let angleRad = Math.atan((coords.ax-coords.bx)/(coords.az-coords.bz));
@@ -15,26 +14,20 @@ function computeHeading() {
 
     if(0 < coords.bx-coords.ax && 0 < coords.bz-coords.az) { //Quadrant NE
         angleDeg = -1 * angleRad * 180 / Math.PI + 180;
-        console.log("Quadrant NE");
     } else if(0 > coords.bx-coords.ax && 0 > coords.bz-coords.az){ //Quadrant SW
         angleDeg = -1 * angleRad * 180 / Math.PI - 270;
-        console.log("Quadrant SW");
     }
     if(coords.bx-coords.ax > 0 && coords.bz-coords.az < 0) { //Quadrant SE
         angleDeg = angleRad * 180 / Math.PI;
-        console.log(`Quadrant SE, ${coords.bx} - ${coords.ax}, ${coords.bz} - ${coords.az}`);
     } else if(coords.bx-coords.ax < 0 && coords.bz-coords.az > 0) { //Quadrant NW
         angleDeg = angleRad * 180 / Math.PI - 180;
-        console.log(`Quadrant NW, ${coords.bx} - ${coords.ax}, ${coords.bz} -${coords.az}`);
     }
-
     if(angleDeg<0) {
         angleDeg = 360-angleDeg;
     }
     if(angleDeg>=360) {
         angleDeg -= 360
     }
-
     document.getElementById("Pos").innerHTML = `Starting position: ${coords.ax}, ${coords.az}. Destination position: ${coords.bx}, ${coords.bz}`
     document.getElementById("Head").innerHTML = `Flight heading ${Math.round(angleDeg * 100)/100}°`
 }
@@ -59,10 +52,9 @@ function computeFlightTime() {
 }
 
 function main() {
-    
     computeHeading()
     computeDistance()
     computeAltitude()
     computeFlightTime()
-    console.log("Compute completed.")
+    console.log("Computed output.")
 }
