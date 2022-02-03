@@ -8,14 +8,14 @@ const options = yargs
  .option("bz", { alias: "endz", describe: "-", type: "string", demandOption: true })
  .argv;
 
-let coords = {
-    ax:options.ax,
-    az:options.az*-1,
-    bx:options.bx,
-    bz:options.bz*-1,
-}
-const ReplyInput = `Starting position: ${options.ax}, ${options.az}. Destination position: ${options.bx}, ${options.bz}`;
+    let coords = {
+        ax:options.ax,
+        az:options.az*-1,
+        bx:options.bx,
+        bz:options.bz*-1,
+    }
 
+const ReplyInput = `Starting position: ${options.ax}, ${options.az}. Destination position: ${options.bx}, ${options.bz}`;
 
 function computeHeading() {
     let angleRad = Math.atan((coords.ax-coords.bx)/(coords.az-coords.bz));
@@ -57,7 +57,7 @@ function computeFlightTime() {
     if(FlighTimeS<3600) { FlightTime = new Date(FlighTimeS * 1000).toISOString().substr(14, 5) + " mm/ss" } else { FlightTime = new Date(FlighTimeS * 1000).toISOString().substr(11, 8) + " hh/mm/ss" }
     console.log(`Flight time @58.3kts: ${FlightTime}`)
 }
-
+ 
 computeHeading()
 computeDistance()
 computeAltitude()

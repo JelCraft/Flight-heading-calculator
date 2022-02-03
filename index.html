@@ -5,28 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flight data calculator</title>
-    <script>CLI.js</script>
+    <script src="index.js"></script>
     <style>
-        p {
+        p, p2 {
             font-family: Rockwell;
+        }
+        p {
             font-size: 1.2em;
+
+        }
+        p2 {
+            font-size: 1.1em;
+            display:list-item
         }
         input {
             width: 5em;
         }
+        .cell {
+            display: inline-table;
+            margin-right: 5em;
+        }
     </style>
 </head>
 <body>
-
-    <div class="input">
-        <p>Starting coordinates</p>
-        <input type=text, id="">
-        <input type=text, id="">
+    <div class="cell">
+        <div class="input">
+            <p>Starting coordinates</p>
+            <input type=text, id="ax" onkeyup="main()">
+            <input type=text, id="az" onkeyup="main()">
+        </div>
+        <div class="input">
+            <p>Destination coordinates</p>
+            <input type=text, id="bx" onkeyup="main()">
+            <input type=text, id="bz" onkeyup="main()">
+        </div>
     </div>
-    <div class="input">
-        <p>Destination coordinates</p>
-        <input type=text, id="">
-        <input type=text, id="">
+    <div class="cell">
+        <p id="Output">Output</p>
+        <p2 id="Pos">Pos</p2>
+        <p2 id="Head">Head</p2>
+        <p2 id="Dist">Dist</p2>
+        <p2 id="Alt">Alt</p2>
+        <p2 id="Time">Time</p2>
     </div>
 </body>
 </html>
