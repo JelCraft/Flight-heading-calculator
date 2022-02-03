@@ -29,19 +29,19 @@ function computeHeading() {
     }
 
     document.getElementById("Pos").innerHTML = `Starting position: ${coords.ax}, ${coords.az}. Destination position: ${coords.bx}, ${coords.bz}`
-    document.getElementById("Head").innerHTML = `Flight heading ${angleDeg} / ${angleDeg2}`
+    document.getElementById("Head").innerHTML = `Flight heading ${Math.round(angleDeg * 100)/100} / ${Math.round(angleDeg2 * 100)/100}`
 }
 
 let distance
 function computeDistance() {
     const coords = getCoords();
     distance = Math.sqrt(((coords.ax-coords.bx)**2)+((coords.az-coords.bz)**2));
-    document.getElementById("Dist").innerHTML = `Distance: ${distance/1000}km`
+    document.getElementById("Dist").innerHTML = `Distance: ${Math.round(distance) / 1000}km`
     return distance;
 }
 
 function computeAltitude() {
-    document.getElementById("Alt").innerHTML = `Glide ratio 7.5:1, Starting altitude (AGL) → ${distance/7.5}`
+    document.getElementById("Alt").innerHTML = `Glide ratio 7.5:1, Starting altitude (AGL) → ${Math.round(distance/7.5 *100)/100}`
 }
 
 function computeFlightTime() {
