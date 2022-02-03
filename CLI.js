@@ -19,25 +19,46 @@ const ReplyInput = `Starting position: ${options.ax}, ${options.az}. Destination
 
 function computeHeading() {
     let angleRad = Math.atan((coords.ax-coords.bx)/(coords.az-coords.bz));
-    let angleDeg = angleRad * 180 / Math.PI;
+    let angleDeg1 = angleRad * 180 / Math.PI;
     let angleDeg2 = angleDeg + 180
+    let angleDegCorrected
 
+    if(0 < coords.bx-coords.ax && 0 < coords.bz-coords.az) { //Quadrant NE
+        angleDegCorrected = angleRad * 180 / Math.PI
+    } else { //Quadrant SW
+        angleDegCorrected = angleRad * 180 / Math.PI + 180
+    }
+    if(coords.bx-coords.ax > 0 && coords.bz-coords.az < 0) { //Quadrant SE
+        angleDegCorrected = angleRad * 180 / Math.PI + 90
+    } else { //Quadrant NW
+        angleDegCorrected = angleRad * 180 / Math.PI + 270
+    }
+
+
+
+    //Fix negative or >360 angles
     if(angleDeg<0) {
         angleDeg = 360-angleDeg;
     }
     if(angleDeg>=360) {
-        angleDeg = angleDeg-360;
+        angleDeg -=360;
     }
 
     if(angleDeg2<0) {
-        angleDeg = 360-angleDeg;
+        angleDeg2 = 360-angleDeg;
     }
     if(angleDeg2>=360) {
-        angleDeg = angleDeg-360;
+        angleDeg2 -=360;
+    }
+    if(angleDegCorrected<0) {
+        angleDegCorrected = 360-angleDegCorrected;
+    }
+    if(angleDegCorrected>=360) {
+        angleDegCorrected -= 360
     }
 
     console.log(ReplyInput);
-    console.log(`Flight heading ${angleDeg} / ${angleDeg2}`);
+    console.log(`Flight heading ${angleDeg1} / ${angleDeg2} (Corrected heading: ${angleDegCorrected})`);
 }
 
 let distance

@@ -1,9 +1,9 @@
 function getCoords() {
     let coords = {
         ax:document.getElementById("ax").value,
-        az:document.getElementById("az").value*-1,
+        az:document.getElementById("az").value*1,
         bx:document.getElementById("bx").value,
-        bz:document.getElementById("bz").value*-1
+        bz:document.getElementById("bz").value*1
     }
     return coords
 }
@@ -11,25 +11,32 @@ function getCoords() {
 function computeHeading() {
     const coords = getCoords();
     let angleRad = Math.atan((coords.ax-coords.bx)/(coords.az-coords.bz));
-    let angleDeg = angleRad * 180 / Math.PI;
-    let angleDeg2 = angleDeg + 180
+    let angleDeg
+
+    if(0 < coords.bx-coords.ax && 0 < coords.bz-coords.az) { //Quadrant NE
+        angleDeg = -1 * angleRad * 180 / Math.PI + 180;
+        console.log("Quadrant NE");
+    } else if(0 > coords.bx-coords.ax && 0 > coords.bz-coords.az){ //Quadrant SW
+        angleDeg = -1 * angleRad * 180 / Math.PI - 270;
+        console.log("Quadrant SW");
+    }
+    if(coords.bx-coords.ax > 0 && coords.bz-coords.az < 0) { //Quadrant SE
+        angleDeg = angleRad * 180 / Math.PI;
+        console.log(`Quadrant SE, ${coords.bx} - ${coords.ax}, ${coords.bz} - ${coords.az}`);
+    } else if(coords.bx-coords.ax < 0 && coords.bz-coords.az > 0) { //Quadrant NW
+        angleDeg = angleRad * 180 / Math.PI - 180;
+        console.log(`Quadrant NW, ${coords.bx} - ${coords.ax}, ${coords.bz} -${coords.az}`);
+    }
 
     if(angleDeg<0) {
         angleDeg = 360-angleDeg;
     }
     if(angleDeg>=360) {
-        angleDeg = angleDeg-360;
-    }
-
-    if(angleDeg2<0) {
-        angleDeg = 360-angleDeg;
-    }
-    if(angleDeg2>=360) {
-        angleDeg = angleDeg-360;
+        angleDeg -= 360
     }
 
     document.getElementById("Pos").innerHTML = `Starting position: ${coords.ax}, ${coords.az}. Destination position: ${coords.bx}, ${coords.bz}`
-    document.getElementById("Head").innerHTML = `Flight heading ${Math.round(angleDeg * 100)/100} / ${Math.round(angleDeg2 * 100)/100}`
+    document.getElementById("Head").innerHTML = `Flight heading ${Math.round(angleDeg * 100)/100}°`
 }
 
 let distance
@@ -41,7 +48,7 @@ function computeDistance() {
 }
 
 function computeAltitude() {
-    document.getElementById("Alt").innerHTML = `Glide ratio 7.5:1, Starting altitude (AGL) → ${Math.round(distance/7.5 *100)/100}`
+    document.getElementById("Alt").innerHTML = `Glide ratio 8.5:1, Starting altitude (AGL) → ${Math.round(distance/8.5 *100)/100}`
 }
 
 function computeFlightTime() {
