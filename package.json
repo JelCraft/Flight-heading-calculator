@@ -1,0 +1,15 @@
+{
+  "name": "flight-heading-calculator",
+  "version": "1.0.0",
+  "description": "Calculate your heading based on a starting and ending position.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JelCraft",
+  "license": "ISC",
+  "dependencies": {
+    "node.js": "^0.0.1-security",
+    "yargs": "13.2"
+  }
+}
